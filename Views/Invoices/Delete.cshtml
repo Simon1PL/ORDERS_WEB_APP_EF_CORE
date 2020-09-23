@@ -1,0 +1,54 @@
+﻿@model LabConsoleAplication.Invoice
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Invoice @Model.InvoiceNumber</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Customer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Products)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Products.First().Quantity)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => model.Customer.CompanyName)
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            @foreach (var product in Model.Products.Where(p => p.ProductID != 1))
+            {
+                <tr>
+                    <td></td>
+                    <td>
+                        <div>@product.Product.Name</div>
+                    </td>
+                    <td>
+                        <div>@product.Quantity</div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="InvoiceNumber" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

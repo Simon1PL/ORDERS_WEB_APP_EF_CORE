@@ -1,0 +1,66 @@
+﻿@model IEnumerable<LabConsoleAplication.Invoice>
+
+@{
+    ViewData["Title"] = "Invoice List";
+}
+
+<h1>Zamówienia</h1>
+
+<p>
+    <a asp-action="Edit" asp-route-id="">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.InvoiceNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Customer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Products.First().Quantity)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var invoice in Model)
+        {
+            <tr class="invoice">
+                <td>@invoice.InvoiceNumber</td>
+                <td>@invoice.Customer.CompanyName</td>
+                <td></td>
+                <td></td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@invoice.InvoiceNumber">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@invoice.InvoiceNumber">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@invoice.InvoiceNumber">Delete</a>
+                </td>
+            </tr>
+            @foreach (var product in invoice.Products.Where(p => p.ProductID != 1))
+            {
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <div>@product.Product.Name</div>
+                    </td>
+                    <td>
+                        <div>@product.Quantity</div>
+                    </td>
+                    <td></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<style>
+    .invoice {
+        border-top: solid black 5px;
+    }
+</style>
